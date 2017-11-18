@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/malfernion/piBooth/issues"
   },
-  "homepage": "https://github.com/malfernion/piBooth#readme"
+  "homepage": "https://github.com/malfernion/piBooth#readme",
+  "dependencies": {
+    "express": "~4.16.2"
+  }
 }
