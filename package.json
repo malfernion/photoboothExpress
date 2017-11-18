@@ -1,0 +1,27 @@
+{
+  "name": "pibooth",
+  "version": "0.0.1",
+  "description": "A simple node server and web app for running a photo booth with a raspberry pi",
+  "main": "piServer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/malfernion/piBooth.git"
+  },
+  "keywords": [
+    "pi",
+    "raspberry",
+    "gphoto2",
+    "libgphoto",
+    "photobooth",
+    "node"
+  ],
+  "author": "David Ernsting",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/malfernion/piBooth/issues"
+  },
+  "homepage": "https://github.com/malfernion/piBooth#readme"
+}

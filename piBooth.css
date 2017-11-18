@@ -1,0 +1,15 @@
+#take-picture-button {
+  background-color: green;
+  border: none;
+  padding: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  font-family: 'Roboto';
+}
+
+#take-picture-button:active {
+  background-color: red;
+}
