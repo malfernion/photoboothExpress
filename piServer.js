@@ -10,7 +10,11 @@ app.get("/", function(req, res) {
 });
 
 app.post("/capture", function(req, res) {
-   res.send("OK");
+  console.log('received capture request, initiating capture')
+  setTimeout(function() {
+    console.log('capture completed');
+    res.send("OK");
+  }, 2000);
 });
 
 var port = 8443;

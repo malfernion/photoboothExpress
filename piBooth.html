@@ -12,11 +12,51 @@
 
 <body>
   <button class="paper-button" id="take-picture-button">
-    TAKE PICTURE
+    <span id="button-text">TAKE PICTURE</span>
+    <div class="loader hidden" id="taking-picture-loader"></div>
   </button>
 
   <script language="javascript">
     var button = document.getElementById('take-picture-button');
+    var text = document.getElementById('button-text');
+    var loader = document.getElementById('taking-picture-loader');
+    var busy = false;
+
+    // set up picture taking events
+    var pictureTaken = function() {
+      loader.classList.add('hidden');
+      text.innerHTML = 'PICTURE TAKEN!';
+      setTimeout(function() {
+        busy = false;
+        text.innerHTML = 'TAKE PICTURE';
+      }, 750);
+    };
+
+    var sendCaptureRequest = function(callback) {
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', 'http://localhost:8443/capture');
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState>3 && xhr.status==200) {
+           callback();
+        }
+      };
+      xhr.send();
+    };
+
+    var takePicture = function() {
+      busy = true;
+      loader.classList.remove('hidden');
+      text.innerHTML = 'CAPTURING, PLEASE WAIT';
+      sendCaptureRequest(pictureTaken);
+    };
+
+    button.addEventListener('click', function() {
+      if(!busy) {
+        takePicture();
+      }
+    });
+
+    // set up ripple animations
     var ripple = new PaperRipple();
 
     button.appendChild(ripple.$);
@@ -28,6 +68,7 @@
     button.addEventListener('mouseup', function(event) {
       ripple.upAction(event);
     });
+
   </script>
 </body>
 </html>

@@ -14,3 +14,26 @@
 
 #take-picture-button:active {
 }
+
+.loader {
+    opacity: 1;
+    margin-top: 5vw;
+    margin-left: auto;
+    margin-right: auto;
+    width: 16vw;
+    height: 16vw;
+    border: 16px solid #f3f3f3; /* backing border */
+    border-top: 16px solid #f9007e; /* animated loader */
+    border-radius: 50%;
+    animation: spin 2s linear infinite;
+    transition: opacity 0.25s linear;
+}
+
+.loader.hidden {
+  opacity: 0;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
