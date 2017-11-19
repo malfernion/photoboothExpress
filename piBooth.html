@@ -5,12 +5,29 @@
   <meta charset="utf-8">
   <title>pi Booth</title>
 
-  <link rel="stylesheet" href="piBooth.css" media="all">
+  <link rel="stylesheet" type="text/css" href="css/piBooth.css">
+  <link rel="stylesheet" type="text/css" href="paper-ripple/paper-ripple.min.css">
+  <script type="text/javascript" src="paper-ripple/PaperRipple.min.js"> </script>
 </head>
 
 <body>
-  <button id="take-picture-button">
+  <button class="paper-button" id="take-picture-button">
     TAKE PICTURE
   </button>
+
+  <script language="javascript">
+    var button = document.getElementById('take-picture-button');
+    var ripple = new PaperRipple();
+
+    button.appendChild(ripple.$);
+
+    button.addEventListener('mousedown', function(event) {
+      ripple.downAction(event);
+    });
+
+    button.addEventListener('mouseup', function(event) {
+      ripple.upAction(event);
+    });
+  </script>
 </body>
 </html>

@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/malfernion/piBooth#readme",
   "dependencies": {
-    "express": "~4.16.2"
+    "express": "~4.16.2",
+    "paper-ripple": "~0.3.0"
   }
 }
