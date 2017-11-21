@@ -26,6 +26,7 @@
   "homepage": "https://github.com/malfernion/piBooth#readme",
   "dependencies": {
     "express": "~4.16.2",
-    "paper-ripple": "~0.3.0"
+    "paper-ripple": "~0.3.0",
+    "node-gphoto": "git+https://github.com/soixantecircuits/node-gphoto-fii.git#7d3f87e"
   }
 }
