@@ -1,14 +1,14 @@
 {
-  "name": "pibooth",
+  "name": "photoboothExpress",
   "version": "0.0.1",
-  "description": "A simple node server and web app for running a photo booth with a raspberry pi",
-  "main": "piServer.js",
+  "description": "A simple node server and web app for running a photo booth and viewing captured images",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/malfernion/piBooth.git"
+    "url": "git+https://github.com/malfernion/photoboothExpress.git"
   },
   "keywords": [
     "pi",
@@ -21,12 +21,12 @@
   "author": "David Ernsting",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/malfernion/piBooth/issues"
+    "url": "https://github.com/malfernion/photoboothExpress/issues"
   },
-  "homepage": "https://github.com/malfernion/piBooth#readme",
+  "homepage": "https://github.com/malfernion/photoboothExpress#readme",
   "dependencies": {
     "express": "~4.16.2",
     "paper-ripple": "~0.3.0",
-    "node-gphoto": "git+https://github.com/soixantecircuits/node-gphoto-fii.git#7d3f87e"
+    "gphoto2_ffi": "git+https://github.com/soixantecircuits/node-gphoto-fii.git#7d3f87e"
   }
 }

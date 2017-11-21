@@ -19,11 +19,11 @@ app.use('/images', express.static(path.join(__dirname, destination)));
 app.use('/paper-ripple', express.static(path.join(__dirname, '/node_modules/paper-ripple/dist')));
 
 app.get("/", function(req, res) {
-   res.sendFile('piBooth.html', {root : __dirname});
+   res.sendFile('photoBooth.html', {root : __dirname});
 });
 
 app.get("/slideshow", function(req, res) {
-  res.sendFile('piShow.html', {root : __dirname});
+  res.sendFile('photoShow.html', {root : __dirname});
 });
 
 app.get("/nextPicture", function(req, res) {
