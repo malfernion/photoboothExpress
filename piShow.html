@@ -8,8 +8,8 @@
   <link rel="stylesheet" type="text/css" href="css/piBooth.css">
 </head>
 
-<body>
-  <div id="img-container">
+<body style="margin: 0">
+  <div id="img-container" style="width: 100%">
   </div>
 
   <script language="javascript">
@@ -25,6 +25,7 @@
 
       var img = document.createElement("img");
       img.src = url;
+      img.style.width = 'inherit'
       container.appendChild(img);
     };
 
