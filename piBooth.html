@@ -21,6 +21,7 @@
     var text = document.getElementById('button-text');
     var loader = document.getElementById('taking-picture-loader');
     var busy = false;
+    var maxCount = 3;
 
     // set up picture taking events
     var pictureTaken = function() {
@@ -32,22 +33,45 @@
       }, 750);
     };
 
+    var countDown = function() {
+      return new Promise((resolve, reject) => {
+        var count = maxCount;
+        text.innerHTML = count;
+
+        var iterate = function() {
+          count--;
+          if(count === 0) {
+            resolve();
+          } else {
+            text.innerHTML = count;
+            setTimeout(iterate, 1000);
+          }
+        };
+
+        setTimeout(iterate, 1000);
+      });
+    };
+
     var sendCaptureRequest = function(callback) {
-      var xhr = new XMLHttpRequest();
-      xhr.open('POST', 'http://localhost:8443/capture');
-      xhr.onreadystatechange = function() {
-        if (xhr.readyState>3 && xhr.status==200) {
-           callback();
-        }
-      };
-      xhr.send();
+      return new Promise((resolve, reject) => {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'http://localhost:8443/capture');
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState>3 && xhr.status==200) {
+             resolve();
+          }
+        };
+        xhr.send();
+      });
     };
 
     var takePicture = function() {
       busy = true;
-      loader.classList.remove('hidden');
-      text.innerHTML = 'CAPTURING, PLEASE WAIT';
-      sendCaptureRequest(pictureTaken);
+      countDown().then(() => {
+        loader.classList.remove('hidden');
+        text.innerHTML = 'CAPTURING, PLEASE WAIT';
+        sendCaptureRequest().then(pictureTaken);
+      });
     };
 
     button.addEventListener('click', function() {
