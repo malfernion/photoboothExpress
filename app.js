@@ -51,6 +51,10 @@ var init = function() {
   context = gphoto.gp_context_new();
   camera = gphoto.NewInitCamera(context);
 
+  if (!fs.existsSync(destination)){
+      fs.mkdirSync(destination);
+  }
+  
   fs.readdir(destination, (err, files) => {
     images = files;
   });

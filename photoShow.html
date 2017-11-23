@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>pi Show</title>
+  <title>photobooth Express slideshow</title>
 
-  <link rel="stylesheet" type="text/css" href="css/piBooth.css">
+  <link rel="stylesheet" type="text/css" href="css/photoShow.css">
 </head>
 
-<body style="margin: 0">
-  <div id="img-container" style="width: 100%">
+<body>
+  <div id="img-container">
   </div>
 
   <script language="javascript">
@@ -21,12 +21,16 @@
         return;
       }
 
-      container.removeChild(container.childNodes[0]);
+      var oldImg = container.childNodes[0];
+      oldImg.className += 'removing';
 
       var img = document.createElement("img");
       img.src = url;
-      img.style.width = 'inherit'
       container.appendChild(img);
+
+      setTimeout(() => {
+        container.removeChild(oldImg);
+      }, 2000);
     };
 
     var getNextPictureUrl = function() {
@@ -48,7 +52,7 @@
       setTimeout(() => {
         getNextPictureUrl().then(showPicture);
         loopPictures();
-      }, 10000);
+      }, 8000);
     };
 
     getNextPictureUrl().then(showPicture);

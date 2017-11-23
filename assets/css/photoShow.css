@@ -1,0 +1,21 @@
+body {
+  margin: 0;
+}
+
+#img-container {
+  width: 100%;
+}
+
+img {
+  width: inherit;
+  opacity: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+img.removing {
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 2s linear;
+}
