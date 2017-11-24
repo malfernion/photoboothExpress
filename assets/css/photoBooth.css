@@ -9,13 +9,24 @@
   width: 100%;
   height: 100%;
   font-weight: bold;
-  font-size: 4vw;
+  font-size: 8vw;
+}
+
+svg {
+  position: absolute;
+  left: 50%;
+  margin-left: -6vw;
+  margin-top: -1vw;
+  width: 12vw;
+  height: 12vw;
 }
 
 #take-picture-button:active {
 }
 
 .loader {
+    position: relative;
+    top: -19vw;
     opacity: 1;
     margin-top: 5vw;
     margin-left: auto;
@@ -26,10 +37,10 @@
     border-top: 16px solid #f9007e; /* animated loader */
     border-radius: 50%;
     animation: spin 2s linear infinite;
-    transition: opacity 0.25s linear;
+    transition: opacity 0.5s linear;
 }
 
-.loader.hidden {
+.hidden {
   opacity: 0;
 }
 

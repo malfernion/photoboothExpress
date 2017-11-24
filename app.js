@@ -54,7 +54,7 @@ var init = function() {
   if (!fs.existsSync(destination)){
       fs.mkdirSync(destination);
   }
-  
+
   fs.readdir(destination, (err, files) => {
     images = files;
   });
