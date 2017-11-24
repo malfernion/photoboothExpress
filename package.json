@@ -27,6 +27,7 @@
   "dependencies": {
     "express": "~4.16.2",
     "paper-ripple": "~0.3.0",
-    "gphoto2_ffi": "git+https://github.com/soixantecircuits/node-gphoto-fii.git#7d3f87e"
+    "gphoto2_ffi": "git+https://github.com/soixantecircuits/node-gphoto-fii.git#7d3f87e",
+    "ip": "~1.1.5"
   }
 }

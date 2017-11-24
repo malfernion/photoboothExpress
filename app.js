@@ -2,11 +2,13 @@ var express = require('express');
 var path = require('path');
 var ref = require('ref');
 var fs = require('fs');
+var ip = require('ip');
 var gphoto = require('./node_modules/gphoto2_ffi/index.js');
 var gphoto_get_config = require("./node_modules/gphoto2_ffi/get_config");
 var app = express();
 
 var port = 8443;
+var configured = false;
 var context, camera;
 var destination = './images/';
 var fileName = 'wedding_photo_';
@@ -18,17 +20,66 @@ app.use(express.static(path.join(__dirname, 'assets')));
 app.use('/images', express.static(path.join(__dirname, destination)));
 app.use('/paper-ripple', express.static(path.join(__dirname, '/node_modules/paper-ripple/dist')));
 
+var readDirectory = function() {
+  // create and/or read image directory
+  if (!fs.existsSync(destination)){
+      fs.mkdirSync(destination);
+  }
+  fs.readdir(destination, (err, files) => {
+    images = files;
+  });
+};
+
+readDirectory();
+
+// Initialisation routes
 app.get("/", function(req, res) {
-   res.sendFile('photoBooth.html', {root : __dirname});
+   res.status(200).sendFile('photoInit.html', {root : __dirname});
 });
 
+app.get('/ip', function(req, res) {
+  res.status(200).send(ip.address() + ':' + port);
+});
+
+app.get('/init', function(req, res) {
+  // initialise camera
+  try {
+    context = gphoto.gp_context_new();
+    camera = gphoto.NewInitCamera(context);
+    configured = true;
+    res.status(200).send();
+  } catch (e) {
+    res.status(503).send();
+  }
+});
+
+app.get('/start', function(req, res) {
+  if(configured) {
+    app.get("/booth", function(req, res) {
+       res.status(200).sendFile('photoBooth.html', {root : __dirname});
+    });
+
+    app.post("/capture", function(req, res) {
+      console.log('received capture request, initiating capture');
+      var result = use_camera();
+      if(result !== 0) {
+        res.status(500).send();
+      }
+      res.status(200).send();
+    });
+
+    res.status(200).send();
+  }
+});
+
+// Slideshow routes
 app.get("/slideshow", function(req, res) {
-  res.sendFile('photoShow.html', {root : __dirname});
+  res.status(200).sendFile('photoShow.html', {root : __dirname});
 });
 
 app.get("/nextPicture", function(req, res) {
   if(images.length > 0) {
-    res.send(path.join(destination, images[imageIndex]));
+    res.status(200).send(path.join(destination, images[imageIndex]));
     imageIndex++;
     if(imageIndex === images.length) {
       imageIndex = 0;
@@ -38,34 +89,10 @@ app.get("/nextPicture", function(req, res) {
   }
 });
 
-app.post("/capture", function(req, res) {
-  console.log('received capture request, initiating capture');
-  var result = use_camera();
-  if(result !== 0) {
-    res.send(500);
-  }
-  res.send(200);
+// Start the server
+app.listen(port, function() {
+  console.log("Listening on " + port);
 });
-
-var init = function() {
-  context = gphoto.gp_context_new();
-  camera = gphoto.NewInitCamera(context);
-
-  if (!fs.existsSync(destination)){
-      fs.mkdirSync(destination);
-  }
-
-  fs.readdir(destination, (err, files) => {
-    images = files;
-  });
-
-  app.listen(port, function() {
-    console.log("Listening on " + port);
-  });
-}
-
-init();
-
 
 var use_camera = function() {
   var imageName = fileName + Date.now() + fileExtension;

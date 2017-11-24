@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>photobooth Express Init</title>
+
+  <link rel="stylesheet" type="text/css" href="css/photoInit.css">
+</head>
+
+<body>
+  <div id="info">
+  </div>
+  <button id="main-button">
+    INITIALISE CAMERA
+  </button>
+
+  <script language="javascript">
+    var info = document.getElementById('info');
+    var button = document.getElementById('main-button');
+    var ipAddress;
+    var cameraConfigured = false;
+
+    var makeInitCameraRequest = function() {
+      return new Promise((resolve, reject) => {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'http://localhost:8443/init');
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState>3 && xhr.status==200) {
+            resolve();
+          } else if (xhr.status==503) {
+            reject();
+          }
+        };
+        xhr.send();
+      });
+    };
+
+    var initCamera = function() {
+      makeInitCameraRequest()
+        .then(
+          () => {
+            cameraConfigured = true;
+            setInfo();
+          },
+          () => {
+            setInfo();
+          }
+        );
+    };
+
+    var getIp = function() {
+      return new Promise((resolve, reject) => {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'http://localhost:8443/ip');
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState>3 && xhr.status==200) {
+            resolve(xhr.responseText);
+          }
+        };
+        xhr.send();
+      });
+    };
+
+    var setInfo = function() {
+      var configDescription = cameraConfigured === true ? ' ' : ' not ';
+      info.innerHTML = 'photoboothExpress setup page. Server is available at: ' + ipAddress + ' (slideshow route is /slideshow). The camera is' + configDescription + 'configured';
+      if(cameraConfigured) {
+        button.innerHTML = 'START PHOTOBOOTHEXPRESS';
+      }
+    };
+
+    button.addEventListener('click', function() {
+      if(!cameraConfigured) {
+        initCamera();
+      } else {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'http://localhost:8443/start');
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState>3 && xhr.status==200) {
+            window.location.href = '/booth';
+          }
+        };
+        xhr.send();
+      }
+    });
+
+    getIp().then((response) => {
+      ipAddress = response;
+      initCamera()
+    });
+
+  </script>
+</body>
+</html>
