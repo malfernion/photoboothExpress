@@ -14,6 +14,7 @@
 
   <script language="javascript">
     var container = document.getElementById('img-container');
+    var serverAddress = window.location.origin;
 
     // insert a new picture
     var showPicture = function(url) {
@@ -36,7 +37,7 @@
     var getNextPictureUrl = function() {
       return new Promise((resolve, reject) => {
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://localhost:8443/nextPicture');
+        xhr.open('GET', serverAddress + '/nextPicture');
         xhr.onreadystatechange = function() {
           if (xhr.readyState>3 && xhr.status==200) {
             resolve(xhr.responseText);
