@@ -4,7 +4,8 @@
   "description": "A simple node server and web app for running a photo booth and viewing captured images",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall" : "./scripts/postinstall.sh"
   },
   "repository": {
     "type": "git",
