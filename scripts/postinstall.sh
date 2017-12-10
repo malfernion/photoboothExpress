@@ -6,6 +6,8 @@ read -p "Would you like photoboothExpress to place a script that starts the serv
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-  sed "s|installLocation|$DIR|g" $DIR/startPhotobooth.sh > ~/Desktop/startPhotobooth.sh
-  chmod +x ~/Desktop/startPhotobooth.sh
+  sed "s|scriptLocation|$DIR|g" $DIR/startPhotobooth.sh > $DIR/configuredStartPhotobooth.sh
+  sed "s|scriptLocation|$DIR|g" $DIR/photoboothExpress.desktop > ~/Desktop/photoboothExpress.desktop
+  chmod +x $DIR/configuredStartPhotobooth.sh
+  chmod +x ~/Desktop/photoboothExpress.desktop
 fi

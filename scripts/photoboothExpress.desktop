@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=photobooth Express
+Exec=scriptLocation/configuredStartPhotobooth.sh
+Icon=scriptLocation/../assets/icons/photoBoothExpress.png
+Terminal=false
+Type=Application
