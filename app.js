@@ -42,7 +42,7 @@ app.get('/ip', function(req, res) {
 });
 
 app.get('/init', function(req, res) {
-  grab_camera().then(() => {
+  grabCamera().then(() => {
     configured = true;
     res.status(200).send();
   }, () => {
@@ -58,16 +58,11 @@ app.get('/start', function(req, res) {
 
     app.post("/capture", function(req, res) {
       console.log('received capture request, initiating capture');
-      grab_camera().then(() => {
-        var result = use_camera();
-        if(result !== 0) {
-          res.status(500).send();
-        }
-        res.status(200).send();
-      }, () => {
+      var result = use_camera();
+      if(result !== 0) {
         res.status(500).send();
-      })
-
+      }
+      res.status(200).send();
     });
 
     res.status(200).send();
@@ -97,19 +92,23 @@ app.listen(port, function() {
 });
 
 // initialise camera
-var grab_camera = function() {
+var grabCamera = function() {
+  console.log('grabbing camera');
   return new Promise((resolve, reject) => {
     try {
       context = gphoto.gp_context_new();
       camera = gphoto.NewInitCamera(context);
+      console.log('grabbed camera');
       resolve();
     } catch (e) {
+      console.log('screwed up grabbing camera');
       reject();
     }
   });
 };
 
 var use_camera = function() {
+  console.log('using camera');
   var imageName = fileName + Date.now() + fileExtension;
   var dest_path = path.join(destination, imageName);
 

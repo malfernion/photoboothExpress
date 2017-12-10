@@ -28,24 +28,20 @@
     var maxCount = 3;
 
     // set up picture taking events
-    var pictureTaken = function() {
+    var pictureTaken = function(success) {
       text.classList.add('hidden');
-      tick.classList.remove('hidden');
+      if(success) {
+        tick.classList.remove('hidden');
+      } else {
+        error.classList.remove('hidden');
+      }
       loader.classList.add('hidden');
       setTimeout(function() {
-        tick.classList.add('hidden');
-        text.innerHTML = 'TOUCH TO TAKE A PHOTO';
-        text.classList.remove('hidden');
-        busy = false;
-      }, 500);
-    };
-
-    var error = function() {
-      text.classList.add('hidden');
-      error.classList.remove('hidden');
-      loader.classList.add('hidden');
-      setTimeout(function() {
-        error.classList.add('hidden');
+        if(success) {
+          tick.classList.add('hidden');
+        } else {
+          error.classList.add('hidden');
+        }
         text.innerHTML = 'TOUCH TO TAKE A PHOTO';
         text.classList.remove('hidden');
         busy = false;
@@ -89,8 +85,13 @@
     var takePicture = function() {
       busy = true;
       loader.classList.remove('hidden');
-      countDown().then(() => {
-        sendCaptureRequest().then(pictureTaken, error);
+      countDown()
+      .then(() => {
+        sendCaptureRequest()
+        .then(
+          () => {pictureTaken(true)},
+          () => {pictureTaken(false)}
+        );
       });
     };
 
