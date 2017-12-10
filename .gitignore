@@ -58,4 +58,7 @@ typings/
 .env
 
 # images
-*images/.png
+images/*.png
+
+# config
+config.json

@@ -7,11 +7,20 @@ var gphoto = require('./node_modules/gphoto2_ffi/index.js');
 var gphoto_get_config = require("./node_modules/gphoto2_ffi/get_config");
 var app = express();
 
-var port = 8443;
+// try loading local config from config.json
+var config;
+try {
+  config = require('./config.json');
+} catch (e) {
+  config = {};
+}
+var port = config.port ? config.port : 8443;
+var destination = config.destination ? config.destination : './images/';
+var fileName = config.fileName ? config.fileName : 'wedding_photo_';
+
+// local variables
 var configured = false;
 var context, camera;
-var destination = './images/';
-var fileName = 'wedding_photo_';
 var fileExtension = '.png';
 var images = [];
 var imageIndex = 0;
