@@ -42,15 +42,12 @@ app.get('/ip', function(req, res) {
 });
 
 app.get('/init', function(req, res) {
-  // initialise camera
-  try {
-    context = gphoto.gp_context_new();
-    camera = gphoto.NewInitCamera(context);
+  grab_camera().then(() => {
     configured = true;
     res.status(200).send();
-  } catch (e) {
+  }, () => {
     res.status(503).send();
-  }
+  });
 });
 
 app.get('/start', function(req, res) {
@@ -61,11 +58,16 @@ app.get('/start', function(req, res) {
 
     app.post("/capture", function(req, res) {
       console.log('received capture request, initiating capture');
-      var result = use_camera();
-      if(result !== 0) {
+      grab_camera().then(() => {
+        var result = use_camera();
+        if(result !== 0) {
+          res.status(500).send();
+        }
+        res.status(200).send();
+      }, () => {
         res.status(500).send();
-      }
-      res.status(200).send();
+      })
+
     });
 
     res.status(200).send();
@@ -93,6 +95,19 @@ app.get("/nextPicture", function(req, res) {
 app.listen(port, function() {
   console.log("Listening on " + port);
 });
+
+// initialise camera
+var grab_camera = function() {
+  return new Promise((resolve, reject) => {
+    try {
+      context = gphoto.gp_context_new();
+      camera = gphoto.NewInitCamera(context);
+      resolve();
+    } catch (e) {
+      reject();
+    }
+  });
+};
 
 var use_camera = function() {
   var imageName = fileName + Date.now() + fileExtension;
