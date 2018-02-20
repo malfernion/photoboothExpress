@@ -18,13 +18,13 @@
   <script language="javascript">
     var info = document.getElementById('info');
     var button = document.getElementById('main-button');
-    var ipAddress;
+    var serverAddress = window.location.origin;
     var cameraConfigured = false;
 
     var makeInitCameraRequest = function() {
       return new Promise((resolve, reject) => {
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://localhost:8443/init');
+        xhr.open('GET', serverAddress + '/init');
         xhr.onreadystatechange = function() {
           if (xhr.readyState>3 && xhr.status==200) {
             resolve();
@@ -49,22 +49,9 @@
         );
     };
 
-    var getIp = function() {
-      return new Promise((resolve, reject) => {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://localhost:8443/ip');
-        xhr.onreadystatechange = function() {
-          if (xhr.readyState>3 && xhr.status==200) {
-            resolve(xhr.responseText);
-          }
-        };
-        xhr.send();
-      });
-    };
-
     var setInfo = function() {
       var configDescription = cameraConfigured === true ? ' ' : ' not ';
-      info.innerHTML = 'photoboothExpress setup page. Server is available at: ' + ipAddress + ' (slideshow route is /slideshow). The camera is' + configDescription + 'configured';
+      info.innerHTML = 'photoboothExpress setup page. Server is available at: ' + serverAddress + ' (slideshow route is /slideshow). The camera is' + configDescription + 'configured';
       if(cameraConfigured) {
         button.innerHTML = 'START PHOTOBOOTHEXPRESS';
       }
@@ -75,7 +62,7 @@
         initCamera();
       } else {
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://localhost:8443/start');
+        xhr.open('GET', serverAddress + '/start');
         xhr.onreadystatechange = function() {
           if (xhr.readyState>3 && xhr.status==200) {
             window.location.href = '/booth';
@@ -85,10 +72,7 @@
       }
     });
 
-    getIp().then((response) => {
-      ipAddress = response;
-      initCamera()
-    });
+    initCamera();
 
   </script>
 </body>

@@ -24,6 +24,7 @@
     var loader = document.getElementById('taking-picture-loader');
     var tick = document.getElementById('tick');
     var error = document.getElementById('error');
+    var serverAddress = window.location.origin;
     var busy = false;
     var maxCount = 3;
 
@@ -70,7 +71,7 @@
     var sendCaptureRequest = function() {
       return new Promise((resolve, reject) => {
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'http://localhost:8443/capture');
+        xhr.open('POST', serverAddress + '/capture');
         xhr.onreadystatechange = function() {
           if (xhr.readyState>3 && xhr.status==200) {
             resolve();

@@ -46,10 +46,6 @@ app.get("/", function(req, res) {
    res.status(200).sendFile('photoInit.html', {root : __dirname});
 });
 
-app.get('/ip', function(req, res) {
-  res.status(200).send(ip.address() + ':' + port);
-});
-
 app.get('/init', function(req, res) {
   grabCamera().then(() => {
     configured = true;
@@ -97,7 +93,7 @@ app.get("/nextPicture", function(req, res) {
 
 // Start the server
 app.listen(port, function() {
-  console.log("Listening on " + port);
+  console.log("Listening on " + ip.address() + ':' + port);
 });
 
 // initialise camera
