@@ -59,6 +59,7 @@ typings/
 
 # images
 images/*.png
+images/*.jpg
 
 # config
 config.json

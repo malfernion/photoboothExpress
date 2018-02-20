@@ -21,7 +21,7 @@ var fileName = config.fileName ? config.fileName : 'wedding_photo_';
 // local variables
 var configured = false;
 var context, camera;
-var fileExtension = '.png';
+var fileExtension = '.jpg';
 var images = [];
 var imageIndex = 0;
 
