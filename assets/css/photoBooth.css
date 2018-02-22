@@ -12,11 +12,21 @@
   font-size: 8vw;
 }
 
+#button-text {
+  position: absolute;
+  width: 100%;
+  left: 0;
+}
+
+#button-text.counter {
+  line-height: 240%;
+}
+
 svg {
   position: absolute;
   left: 50%;
+  top: 40%;
   margin-left: -6vw;
-  margin-top: -1vw;
   width: 12vw;
   height: 12vw;
 }
@@ -26,9 +36,7 @@ svg {
 
 .loader {
     position: relative;
-    top: -19vw;
     opacity: 1;
-    margin-top: 5vw;
     margin-left: auto;
     margin-right: auto;
     width: 16vw;

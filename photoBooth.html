@@ -44,6 +44,7 @@
           error.classList.add('hidden');
         }
         text.innerHTML = 'TOUCH TO TAKE A PHOTO';
+        text.classList.remove('counter');
         text.classList.remove('hidden');
         busy = false;
       }, 500);
@@ -53,6 +54,7 @@
       return new Promise((resolve, reject) => {
         var count = maxCount;
         text.innerHTML = count;
+        text.classList.add('counter');
 
         var iterate = function() {
           count--;
