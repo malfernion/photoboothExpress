@@ -18,20 +18,22 @@
 
     // insert a new picture
     var showPicture = function(url) {
-      if(url === null || typeof url === 'undefined') {
+      if(!url) {
         return;
       }
 
       var oldImg = container.childNodes[0];
       oldImg.className += 'removing';
 
-      var img = document.createElement("img");
-      img.src = url;
-      container.appendChild(img);
-
       setTimeout(() => {
-        container.removeChild(oldImg);
-      }, 2000);
+        var img = document.createElement("img");
+        img.src = url;
+        container.appendChild(img);
+
+        setTimeout(() => {
+          container.removeChild(oldImg);
+        }, 1600);
+      }, 250);
     };
 
     var getNextPictureUrl = function() {
